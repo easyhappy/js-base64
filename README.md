@@ -1,86 +1,20 @@
-[![build status](https://secure.travis-ci.org/dankogai/js-base64.png)](http://travis-ci.org/dankogai/js-base64)
+```flow
+st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|request
 
-# base64.js
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->sub1(left)->op1
+c2(yes)->io->e
+c2(no)->op2->e
 
-Yet another Base64 transcoder
 
-## Usage
-
-### In Browser
-
-```html
-<script src="base64.js"></script>
+st@>op1({"stroke":"Yellow"})@>cond({"stroke":"Red","stroke-width":6,"arrow-end":"classic-wide-long"})@>c2({"stroke":"Red"})@>op2({"stroke":"Red"})@>e({"stroke":"Red"})
 ```
-
-### node.js
-
-```javascript
-var Base64 = require('js-base64').Base64;
-```
-
-## es6+
-
-```javascript
-import { Base64 } from 'js-base64';
-```
-
-### npm
-
-```javascript
-$ npm install --save js-base64
-```
-
-
-## SYNOPSIS
-
-```javascript
-Base64.encode('dankogai');  // ZGFua29nYWk=
-Base64.encode('小飼弾');    // 5bCP6aO85by+
-Base64.encodeURI('小飼弾'); // 5bCP6aO85by-
-
-Base64.decode('ZGFua29nYWk=');  // dankogai
-Base64.decode('5bCP6aO85by+');  // 小飼弾
-// note .decodeURI() is unnecessary since it accepts both flavors
-Base64.decode('5bCP6aO85by-');  // 小飼弾
-```
-
-### String Extension for ES5
-
-```javascript
-if (Base64.extendString) {
-    // you have to explicitly extend String.prototype
-    Base64.extendString();
-    // once extended, you can do the following
-    'dankogai'.toBase64();       // ZGFua29nYWk=
-    '小飼弾'.toBase64();         // 5bCP6aO85by+
-    '小飼弾'.toBase64(true);     // 5bCP6aO85by-
-    '小飼弾'.toBase64URI();      // 5bCP6aO85by-
-    'ZGFua29nYWk='.fromBase64(); // dankogai
-    '5bCP6aO85by+'.fromBase64(); // 小飼弾
-    '5bCP6aO85by-'.fromBase64(); // 小飼弾
-}
-```
-
-### TypeScript
-
-TypeScript 2.0 type definition was added to the [DefinitelyTyped repository](https://github.com/DefinitelyTyped/DefinitelyTyped).
-
-```bash
-$ npm install --save @types/js-base64
-```
-
-## `.decode()` vs `.atob` (and `.encode()` vs `btoa()`)
-
-Suppose you have:
-
-```
-var pngBase64 = 
-  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
-```
-
-Which is a Base64-encoded 1x1 transparent PNG, **DO NOT USE** `Base64.decode(pngBase64)`.  Use `Base64.atob(pngBase64)` instead.  `Base64.decode()` decodes to UTF-8 string while `Base64.atob()` decodes to bytes, which is compatible to browser built-in `atob()` (Which is absent in node.js).  The same rule applies to the opposite direction.
-
-
-## SEE ALSO
-
-+ http://en.wikipedia.org/wiki/Base64
