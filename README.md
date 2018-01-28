@@ -1,4 +1,4 @@
-```flow
+
 st=>start: Start|past:>http://www.google.com[blank]
 e=>end: End:>http://www.google.com
 op1=>operation: My Operation|past
@@ -17,4 +17,4 @@ c2(no)->op2->e
 
 
 st@>op1({"stroke":"Yellow"})@>cond({"stroke":"Red","stroke-width":6,"arrow-end":"classic-wide-long"})@>c2({"stroke":"Red"})@>op2({"stroke":"Red"})@>e({"stroke":"Red"})
-```
+
